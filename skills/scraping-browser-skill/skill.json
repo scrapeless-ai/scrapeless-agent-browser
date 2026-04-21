@@ -1,41 +1,167 @@
 {
-  "name": "scraping-browser-skill",
-  "description": "Cloud browser automation CLI for AI agents powered by Scrapeless. Use when the user needs to interact with websites using cloud browsers, including navigating pages, filling forms, clicking buttons, taking screenshots, extracting data, testing web apps, or automating any browser task with residential proxies and anti-detection features.",
-  "version": "0.1.0",
+  "name": "scrapeless-scraping-browser",
+  "description": "Drive the Scrapeless cloud browser to open pages, discover DOM, extract structured data, fill forms, screenshot, and route traffic through residential proxies with anti-detection fingerprinting. Use when the user asks to scrape, extract, pull, grab, or fetch data from a page; fill out or submit a form; log in or sign in to a site; take a screenshot; download a file; automate a browser task; or run requests through a specific geography or a residential proxy.",
+  "whenNotToUse": "For plain HTML fetches of static pages, WebFetch or curl is cheaper. For authenticated multi-step flows that outlive the session TTL, use the @scrapeless-ai SDK / exported ScrapelessAPI directly. For MCP-first setups, use scrapeless-mcp-server.",
+  "version": "0.2.0",
   "author": "Scrapeless AI",
   "license": "Apache-2.0",
-  "repository": "https://github.com/scrapeless-ai/scraping-browser-skill",
+  "repository": "https://github.com/scrapeless-ai/scrapeless-agent-browser",
+  "homepage": "https://app.scrapeless.com",
   "keywords": [
     "browser",
-    "automation",
+    "browser-automation",
+    "cloud-browser",
+    "headless-browser",
     "scraping",
-    "ai",
-    "agent",
-    "cloud",
-    "scrapeless",
-    "cli"
+    "web-scraping",
+    "data-extraction",
+    "playwright-alternative",
+    "cdp",
+    "residential-proxy",
+    "geo-targeting",
+    "anti-detection",
+    "fingerprinting",
+    "captcha",
+    "session-recording",
+    "live-preview",
+    "web-testing",
+    "form-automation",
+    "scrapeless"
   ],
   "triggers": [
     "open a website",
-    "fill out a form", 
-    "click a button",
-    "take a screenshot",
+    "navigate to a page",
     "scrape data from a page",
+    "extract data from",
+    "extract the top",
+    "pull data from",
+    "grab data from",
+    "fetch data from",
+    "fill out a form",
+    "submit a form",
+    "click a button",
+    "log in to",
+    "sign in to",
+    "take a screenshot",
+    "download a file",
+    "upload a file",
     "test this web app",
-    "use a proxy",
-    "bypass detection",
+    "automate a browser task",
     "browser automation",
     "web scraping",
-    "cloud browser"
+    "cloud browser",
+    "use a proxy",
+    "residential proxy",
+    "bypass detection",
+    "anti-detection browser",
+    "stealth browser",
+    "type into editor",
+    "type into contenteditable",
+    "using Scrapeless",
+    "record this session",
+    "live preview of the browser"
   ],
   "allowedTools": [
+    "Bash(scrapeless-scraping-browser:*)",
     "Bash(npx scrapeless-scraping-browser:*)",
-    "Bash(scrapeless-scraping-browser:*)"
+    "Bash(npx scrapeless-scraping-browser-skills:*)"
   ],
+  "environment": {
+    "required": ["SCRAPELESS_API_KEY"],
+    "notes": "Fallback: config file at ~/.scrapeless/config.json (user-only 0600 permissions). Config takes priority over env; only SCRAPELESS_API_KEY is read from the environment. The scrapeless-mcp-server reads SCRAPELESS_KEY (different name) — not used by this skill."
+  },
   "requirements": {
     "node": ">=18.0.0"
   },
   "installation": {
-    "npm": "npm install -g scrapeless-scraping-browser"
-  }
+    "npm": "npm install -g scrapeless-scraping-browser",
+    "paths": {
+      "claude-code": "~/.claude/skills/scrapeless-scraping-browser",
+      "codex": "~/.agents/skills/scrapeless-scraping-browser",
+      "cursor": "~/.cursor/skills/scrapeless-scraping-browser",
+      "github-copilot": "~/.copilot/skills/scrapeless-scraping-browser",
+      "gemini-cli": "~/.gemini/skills/scrapeless-scraping-browser",
+      "antigravity": "~/.gemini/antigravity/skills/scrapeless-scraping-browser",
+      "windsurf": "~/.codeium/windsurf/skills/scrapeless-scraping-browser",
+      "opencode": "~/.config/opencode/skills/scrapeless-scraping-browser"
+    }
+  },
+  "compatibility": {
+    "claude-code": "*",
+    "codex": ">=0.120.0",
+    "cursor": ">=3.0.0",
+    "github-copilot": "*",
+    "gemini-cli": "*",
+    "antigravity": "*",
+    "windsurf": ">=1.9577.27",
+    "opencode": "*"
+  },
+  "capabilities": {
+    "discovery": ["snapshot -i", "get html", "get text", "get attr", "get count", "find role", "find text", "find label"],
+    "extraction": ["eval", "eval --stdin", "eval -b", "get text", "get attr", "get html", "get value", "get box", "get styles"],
+    "interaction": ["click", "dblclick", "fill", "type", "press", "hover", "focus", "check", "uncheck", "select", "scroll", "scrollintoview", "drag"],
+    "keyboard": ["keyboard type", "keyboard inserttext", "press"],
+    "files": ["upload", "download", "pdf", "screenshot --full", "screenshot --annotate"],
+    "waits": ["wait @ref", "wait --load networkidle", "wait --url", "wait <ms>"],
+    "state_checks": ["is visible", "is enabled", "is checked"],
+    "session_cloud": ["new-session --ttl", "new-session --recording", "new-session --proxy-country", "sessions", "stop", "stop-all", "live"],
+    "session_local": ["session", "session list", "SCRAPELESS_BROWSER_SESSION"],
+    "identity": ["--proxy-country", "--proxy-state", "--proxy-city", "--platform", "--user-agent", "--screen-width", "--screen-height", "--timezone", "--languages"],
+    "state": ["cookies", "storage local", "storage session", "auth save", "auth login", "auth list", "auth show", "auth delete"],
+    "navigation": ["open", "back", "forward", "reload"],
+    "tabs": ["tab new", "tab list", "tab close", "tab <n>"],
+    "network": ["network route --abort", "network route --body", "network unroute", "network requests --filter"],
+    "emulation": ["set viewport", "set device", "set geo", "set offline", "set headers", "set credentials", "set media"],
+    "mouse": ["mouse move", "mouse down", "mouse up", "mouse wheel"],
+    "visual_regression": ["diff snapshot", "diff screenshot --baseline", "diff url"],
+    "debug": ["trace start/stop", "profiler start/stop", "record start/stop", "console", "errors", "highlight", "live"],
+    "safety": ["--confirm-actions", "confirm <id>", "deny <id>"]
+  },
+  "examples": [
+    {
+      "prompt": "Open Hacker News, extract the top five stories with title, URL, author, score, and comment count, and return as JSON.",
+      "sequence": [
+        {"cmd": "new-session --name \"hn\" --ttl 600"},
+        {"cmd": "open https://news.ycombinator.com/"},
+        {"cmd": "get html \"#hnmain\"", "note": "Discovery. Agent reads the returned DOM to identify the real row/title/score selectors — does NOT guess them from memory."},
+        {"cmd": "eval \"JSON.stringify([...document.querySelectorAll('<row-selector-from-previous-step>')].slice(0,5).map(r => ({ title: r.querySelector('<title-selector>')?.textContent, ... })))\"", "note": "Extraction. Selectors here come from what the agent just read in the get html output, not from training data."},
+        {"cmd": "close"}
+      ],
+      "pattern": "discover → extract"
+    },
+    {
+      "prompt": "Fill the job application at <URL> with my resume at ~/docs/resume.txt, screenshot the form, and stop before the final submit so I can review.",
+      "sequence": [
+        {"cmd": "new-session --name \"job-apply\" --ttl 1200"},
+        {"cmd": "open <URL>"},
+        {"cmd": "snapshot -i", "note": "Discovery for interaction. Returns @e1, @e2, … refs with roles and labels — agent maps prompt fields to refs from this output."},
+        {"cmd": "fill @e1 \"Jane Doe\"", "note": "All refs in this block come from the snapshot -i output above."},
+        {"cmd": "fill @e2 \"jane@example.com\""},
+        {"cmd": "upload @e6 ~/docs/resume.txt"},
+        {"cmd": "screenshot --full review.png", "note": "Stop here. Do NOT click the submit ref until the human approves review.png."}
+      ],
+      "pattern": "interactive, stop-before-submit"
+    },
+    {
+      "prompt": "Open Booking.com as if I were in Tokyo — Japanese residential proxy, iOS Safari, Tokyo timezone — and pull the top five hotels for June 15–18.",
+      "sequence": [
+        {"cmd": "new-session --proxy-country JP --proxy-city tokyo --platform iOS --timezone Asia/Tokyo --languages ja,en", "note": "Session identity set BEFORE open — proxy and fingerprint can't change mid-session. Residential-proxy allocation (especially non-US countries) can take 30–60s and occasionally 503s on first attempt; wrap new-session in a 3–5 try retry loop."},
+        {"cmd": "open \"https://www.booking.com/searchresults.html?...\""},
+        {"cmd": "get html \"<container-sel>\"", "note": "Discovery. Agent does not assume [data-testid='property-card'] is still the selector — Booking A/B tests aggressively. Reads real DOM first."},
+        {"cmd": "eval \"JSON.stringify([...document.querySelectorAll('<card-selector-from-previous-step>')].slice(0,5).map(c => ({ name: ..., price: ..., score: ... })))\"", "note": "Selectors here are the ones the agent just saw in get html."},
+        {"cmd": "close"}
+      ],
+      "pattern": "geo + fingerprint"
+    },
+    {
+      "prompt": "Rerun this with session recording enabled — the extraction came back empty yesterday and I want to see why.",
+      "sequence": [
+        {"cmd": "new-session --name \"debug\" --ttl 900 --recording true", "note": "Recording enabled at session creation — can't be toggled mid-session."},
+        {"cmd": "open <URL>"},
+        {"cmd": "live", "note": "Returns a WSS URL. Agent gives it to the human so they can watch the session in real time."},
+        {"cmd": "snapshot -i", "note": "Inspect state to compare with the (empty) result from yesterday's run."}
+      ],
+      "pattern": "debug with recording + live preview"
+    }
+  ]
 }
