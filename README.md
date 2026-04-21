@@ -2,6 +2,7 @@
 [<img width="4800" height="2516" alt="img_v3_0210o_3aad8381-32d9-4f35-9745-15c16232794g" src="https://github.com/user-attachments/assets/0b63923c-a90d-42c5-b09f-d7f07ca7de33" />](https://www.scrapeless.com/en/product/scraping-browser)
 
 
+
 The ultimate cloud browser automation CLI purpose-built for AI agents, powered by Scrapeless. Designed to seamlessly bridge the gap between Large Language Models (LLMs) and the web, it provides headless browser control with built-in residential proxies, advanced anti-detection mechanisms, and intelligent session management.
 
 ## Features
@@ -57,6 +58,16 @@ Then use via npx:
 npx scrapeless-scraping-browser open example.com
 ```
 
+## Usage with AI Agents
+
+For coding assistants and terminal agents, install the skill:
+
+```bash
+npx skills add scrapeless-ai/scrapeless-agent-browser
+```
+
+This works with Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, Goose, OpenCode, and Windsurf. The skill is fetched from the repository, so it stays up to date automatically.
+
 ## Authentication
 
 Get your API key from the [Scrapeless Dashboard](https://app.scrapeless.com), then set it using the config command or environment variable:
@@ -100,7 +111,7 @@ scrapeless-scraping-browser --session-id $SESSION_ID close
 - Ensures all commands use the same browser session, critical for maintaining state in AI workflows.
 - Prevents automatic session creation/switching which can confuse agent logic.
 - Provides explicit control over session lifecycle.
-- Required for reliable multi-step workflows.
+- Required for reliable multistep workflows.
 
 **Note**: If you don't specify `--session-id`, the CLI will automatically:
 1. Look for the latest running session and use it
@@ -137,15 +148,16 @@ scrapeless-scraping-browser new-session \
   --proxy-country US \
   --proxy-state CA \
   --proxy-city "Los Angeles" \
-  --platform iOS \
+  --platform macOS \
   --screen-width 375 \
   --screen-height 812 \
-  --user-agent "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)" \
+  --user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" \
   --timezone "America/Los_Angeles" \
   --languages "en,es"
 ```
 
 **Available Session Options:**
+- `--help`: Display help information and all available parameters
 - `--name <name>`: Session name for identification
 - `--ttl <seconds>`: Session timeout in seconds (default: 180)
 - `--recording <true|false>`: Enable session recording for debugging
@@ -153,7 +165,7 @@ scrapeless-scraping-browser new-session \
 - `--proxy-state <state>`: Proxy state/region (NSW, CA, NY, TX, etc.)
 - `--proxy-city <city>`: Proxy city (sydney, newyork, london, tokyo, etc.)
 - `--user-agent <ua>`: Custom user agent string
-- `--platform <platform>`: Platform (Windows, macOS, Linux, iOS, Android)
+- `--platform <platform>`: Platform (Windows, macOS, Linux)
 - `--screen-width <px>`: Screen width in pixels (default: 1920)
 - `--screen-height <px>`: Screen height in pixels (default: 1080)
 - `--timezone <tz>`: Timezone (default: America/New_York)
@@ -185,18 +197,22 @@ scrapeless-scraping-browser stop-all
 
 ## Core Commands
 
-**Note**: All browser operation commands support the optional `--session-id <id>` parameter to specify which Scrapeless session to use.
+**Note**: All browser operation commands support the optional `--session-id <id>` parameter to specify which Scrapeless session to use. 
+
+> This document covers the most common usage patterns and commands. The Scrapeless Agent Browser supports many more commands than listed here.
+To see the full command list, run:
+`scrapeless-scraping-browser --help`
 
 ### Navigation & Session Management
 
 ```bash
-scrapeless-scraping-browser new-session [options]              # Create new browser session
-scrapeless-scraping-browser [--session-id <id>] open <url>      # Navigate to URL
-scrapeless-scraping-browser [--session-id <id>] close           # Close browser session
-scrapeless-scraping-browser sessions                           # List running sessions
-scrapeless-scraping-browser live [taskId]                      # Get live preview URL
-scrapeless-scraping-browser stop <taskId>                      # Stop specific session
-scrapeless-scraping-browser stop-all                           # Stop all sessions
+scrapeless-scraping-browser new-session [options]          # Create new browser session
+scrapeless-scraping-browser [--session-id <id>] open <url> # Navigate to URL
+scrapeless-scraping-browser [--session-id <id>] close      # Close browser session
+scrapeless-scraping-browser sessions                       # List running sessions
+scrapeless-scraping-browser live [taskId]                  # Get live preview URL
+scrapeless-scraping-browser stop <taskId>                  # Stop specific session
+scrapeless-scraping-browser stop-all                       # Stop all sessions
 ```
 
 ### Page Interaction
@@ -288,7 +304,7 @@ Configuration is stored in `~/.scrapeless/config.json` with restricted permissio
 | `proxyCity` | Proxy city | `Los Angeles`, `sydney` |
 | `fingerprint` | Browser fingerprint | `chrome`, `firefox` |
 | `userAgent` | Custom user agent string | `Mozilla/5.0...` |
-| `platform` | Platform type | `Windows`, `Linux`, `macOS`, `iOS`, `Android` |
+| `platform` | Platform type | `Windows`, `Linux`, `macOS` |
 | `screenWidth` | Screen width in pixels | `1920`, `2560` |
 | `screenHeight` | Screen height in pixels | `1080`, `1440` |
 | `timezone` | Timezone | `America/New_York`, `Asia/Shanghai` |
